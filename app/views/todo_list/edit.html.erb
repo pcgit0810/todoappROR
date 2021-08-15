@@ -1,0 +1,18 @@
+<%= form_for @todo_list, url: todo_list_path(@todo_list.id), method: :patch do |f| %>
+
+    <div class="mb-3">
+        <%= f.label :description %><br>
+        <%= f.text_field :description, class: "form-control", placeholder: "Buy vegetables" %>   
+    </div>
+  
+    <div class="mb-3">
+        <%= f.label "  " %>
+        <%= f.check_box :completed, {}, 'true', 'false' %>
+        <%= f.label "Completed?" %> <br/>
+    </div>
+  
+    <div class="mb-3">
+        <%= f.submit "Create todo", class: "btn btn-primary" %>
+    </div>
+
+<% end %>
