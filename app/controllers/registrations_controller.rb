@@ -14,7 +14,7 @@ class RegistrationsController < ApplicationController
         if @user.save
             session[:user_id] = @user.id
             redirect_to todo_list_index_path
-            flash[:success] =  "Successfully created account"
+            flash[:success] =  "Successfully account created"
         else
             render :new
         end

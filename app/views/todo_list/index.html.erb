@@ -12,48 +12,54 @@
             <th>Description</th>
             <th>Completed</th>
             <th>Action</th>
+            <th></th>
+            <th></th>
            
         </tr>
         
         <% if Current.user.is_admin?%>
             <% @todo_list.each_with_index do |todo, index| %>
                 <tr>
-                <td><%= index + 1 %></td>
-                <td><%= User.find(todo.user_id).email %></td>
-                <td><%= todo.description %></td>
-                <td>
-                    <%= todo.completed %>
-                </td>
-                <td>
-                    <%= link_to 'Edit Todo', edit_todo_list_path(todo.id), :class=>'btn btn-primary' %>
-                
-                    <%= link_to 'Show', todo_list_path(todo.id), :class=>'btn btn-success' %>
-                
-                    <%= link_to 'Delete', todo_list_path(todo.id), method: :delete, data: {confirm: 'Are you sure?' }, :class=>'btn btn-danger'%>
-                </td>
+                    <td><%= index + 1 %></td>
+                    <td><%= User.find(todo.user_id).email %></td>
+                    <td><%= todo.description %></td>
+                    <td>
+                        <%= todo.completed %>
+                    </td>
+                    <td>
+                        <%= link_to 'Edit Todo', edit_todo_list_path(todo.id), :class=>'btn btn-primary' %>
+                    
+                        <%= link_to 'Show', todo_list_path(todo.id), :class=>'btn btn-success' %>
+                    
+                        <%= link_to 'Delete', todo_list_path(todo.id), method: :delete, data: {confirm: 'Are you sure?' }, :class=>'btn btn-danger'%>
+                    </td>
                 </tr>
             <% end %>
-        <% end %>
         
-        <% if !Current.user.is_admin? %>
-            <% if @todo_list.present?%>
-                <tr>
-                <td><%= 1 %></td>
-                <td><%= User.find(@todo_list.user_id).email %></td>
-                <td><%=@todo_list.description %></td>
-                <td>
-                    <%=@todo_list.completed %>
-                </td>
-                <td>
-                    <%= link_to 'Edit Todo', edit_todo_list_path(@todo_list.id), :class=>'btn btn-primary' %>
-                </td>
-                <td>
-                    <%= link_to 'Show', todo_list_path(@todo_list.id), :class=>'btn btn-success' %>
-                </td>
-                <td>
-                    <%= link_to 'Delete', todo_list_path(@todo_list.id), method: :delete, data: {confirm: 'Are you sure?' }, :class=>'btn btn-danger'%>
-                </td>
-                </tr>
+        <% else %>
+            <% i = 0 %>
+            <% Todolist.all.each do | todo | %>
+                <% if(todo.user_id==Current.user.id) %>
+                    
+                    <% i += 1 %>
+                    <tr>
+                        <td><%= i %></td>
+                        <td><%= User.find(todo.user_id).email %></td>
+                        <td><%=todo.description %></td>
+                        <td>
+                            <%=todo.completed %>
+                        </td>
+                        <td>
+                            <%= link_to 'Edit Todo', edit_todo_list_path(todo.id), :class=>'btn btn-primary' %>
+                        </td>
+                        <td>
+                            <%= link_to 'Show', todo_list_path(todo.id), :class=>'btn btn-success' %>
+                        </td>
+                        <td>
+                            <%= link_to 'Delete', todo_list_path(todo.id), method: :delete, data: {confirm: 'Are you sure?' }, :class=>'btn btn-danger'%>
+                        </td>
+                    </tr>
+                <% end %>
             <% end %>
         <% end %>   
     </table>
